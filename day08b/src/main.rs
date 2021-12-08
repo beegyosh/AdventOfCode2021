@@ -1,4 +1,4 @@
-use std::collections::{HashMap, HashSet};
+use std::collections::{HashSet};
 use itertools::Itertools;
 
 fn decode_signal(word: &str, mapping: &Vec<HashSet<char>>) -> Option<usize> {
@@ -43,28 +43,21 @@ fn main() {
         let mut encryption: Vec<&str> = signal_pair.0.split(" ").collect();
         let signal: Vec<&str> = signal_pair.1.split(" ").collect();
         encryption.sort_by(|a, b| a.len().cmp(&b.len()));
-        println!("Encryption: {:?}", encryption);
         for i in 0..encryption.len() {
             let word = encryption[i];
             let word_set: HashSet<char> = word.chars().collect();
             let decode = decode_signal(word, &mapping);
-            if decode != None {
-                mapping[decode.unwrap()] = word_set.clone()
-            } else {
-                encryption.push(word)
-            }
+            mapping[decode.unwrap()] = word_set.clone()
         }
 
         let mut multiplier = 1000;
         for word in signal {
             let word_set: HashSet<char> = word.chars().collect();
-            print!("{} ", word);
 
             for i in 0..mapping.len() {
                 if word_set == mapping[i] {
                     total += i * multiplier;
                     multiplier = multiplier/10;
-                    println!("{}", multiplier);
                     break
                 }
             }
