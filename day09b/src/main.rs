@@ -51,7 +51,9 @@ fn main() {
         for x in 0..input[y].len() {
             if !visited.contains(&(x, y)) {
                 let (basin_size, basin_points) = basin_search(x, y, &input);
-                visited = visited.union(&basin_points).cloned().collect();
+                for point in basin_points {
+                    visited.insert(point);
+                }
                 basins.push(basin_size);
             }
         }
