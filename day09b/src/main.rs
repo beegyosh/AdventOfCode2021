@@ -10,33 +10,32 @@ fn basin_search(x: usize, y: usize, heightmap: &Vec<Vec<i32>>) -> (i32, HashSet<
         let coords = q.pop().unwrap();
         let c_x = coords.0;
         let c_y = coords.1;
-        let mut neighbors: HashSet<(usize, usize)> = HashSet::new();
+        let mut neighbors: Vec<(usize, usize)> = Vec::new();
 
 
         if heightmap[c_y][c_x] != 9 {
             size += 1;
 
             if c_y as i32 - 1 >= 0 {
-                neighbors.insert((c_x, c_y - 1));
+                neighbors.push((c_x, c_y - 1));
             }
             if c_y + 1 < heightmap.len() {
-                neighbors.insert((c_x, c_y + 1));
+                neighbors.push((c_x, c_y + 1));
             }
             if c_x as i32 - 1 >= 0 {
-                neighbors.insert((c_x - 1, c_y));
+                neighbors.push((c_x - 1, c_y));
             }
             if c_x + 1 < heightmap[c_y].len() {
-                neighbors.insert((c_x + 1, c_y));
+                neighbors.push((c_x + 1, c_y));
             }
         }
 
-
-
-        for i in neighbors.difference(&visited.clone()) {
-            q.push(*i);
-            visited.insert(*i);
+        for i in neighbors {
+            if !visited.contains(&i) {
+                q.push(i);
+                visited.insert(i);
+            }
         }
-
     }
     return (size, visited)
 }
