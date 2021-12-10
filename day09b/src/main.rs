@@ -44,7 +44,7 @@ fn main() {
     let input: Vec<Vec<i32>> = include_str!("../input.txt")
         .lines().map(|x| x.chars().map(|x| x as i32 - 0x30).collect()).collect();
 
-    let mut visited: HashSet<(usize, usize)> = HashSet::new();
+    let mut visited: HashSet<(usize, usize)> = HashSet::with_capacity(input.len() * input[0].len());
     let mut basins: BinaryHeap<i32> = BinaryHeap::new();
     for y in 0..input.len() {
         for x in 0..input[y].len() {
